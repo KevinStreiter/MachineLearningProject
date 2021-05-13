@@ -3,12 +3,6 @@
 
 # Practical 1 Implementation of Linear Regression
 
-To begin with, we split the different task amongst our group, which resulted in the following split:
-
-Kevin: 1, 4, 5, 8, 11
-Flavia: 2, 6, 9, 13
-Gabriel, 3, 7, 10, 12
-
 When approaching the task we quickly noticed that splitting the task work was possible only to the extent that the different task do not rely on each other. Therefore trying out the code would have to wait until all dependent tasks were completed by the respective team members. 
 
 Task 1 and 2 were relatively straight forward as such no problems encountered there as we the respective functions (plot and calc average). 
@@ -26,10 +20,13 @@ In particular interesting was to see how k-fold validation would take a lot of t
 
 # Practical 2 Generative and Discriminative Models
 
+Firstly implementing the distributions of the parameters of the NBC was progressively more difficult. The continious distribution had already all methods that we needed in the scipy.start library. For the binomial, we had to compute the parameter p ourselves in the estimate function. We used the Laplace smoothing technique to tackle the zero probability problem that can occur in the NBC. The multinomial distrbution was the most difficult to implement. The main issue was the fact that in a test dataset there could occur cases where a category appeared in the test data set which was not present in the training dataset. This would lead to an error, as no theta would have been calculated for it. In order to solve this problem we implemented within our code how many feature calsses were missing, added them, while at the same time making sure that the sum of theta exceeded the sum of 1. Again we used Laplace smoothing as for the binomial distribution.
+
+For the NBC implementation, we have used the log-sum-exp trick. We used this in order to prevent underflow/overflow errors. The accuracy of our model on the Iris dataset was 96% on average. For the logistic regression, and the comparison between it and NBC; we used the sklearn implementation.
+
+Evaluating the iris dataset was by far the most simple, we decided to drop the 'sepal width' feature, as it didn't add much information which we could use. In the Voting dataset we encountered missing values, and we noticed that the NBC performs better if we drop the missing values. For the car evaluation dataset the naive bayes classifier outperformed the logistic regression . The the label classes were unbalanced for the dataset, a solution to deal with this could have been to undersample or oversample the dataset, i.e. balance the dataset by reducing the size of the class with a lot of observations, or increasing the size of 'rare' samples respectively. Dataset 4 led us to realise the issue about categories appearing in the test dataset which were not in the training dataset, which we solved in the multinomial distribution. A different method to tackle this, was to add an observation to each category, which would have not impacted the sum of the probabilities, and would have let to a very negative number after the log was taken. For the ionosphere dataset we standardised the data, as we had continious values. Further we created a correlation matrix to see which features had a relatively high correlation amongst each other and decided such features to drop. Further we also checked which features had a relatively high correlation with the label and checked whether those were droped per the correlation dropping approach mentione earlier. In case such a label was dropped we moved it back in. Further we dropped feature 2 as it contained only 0 which is why we passed on using this feature and dropped it as well. The updating of our model would then lead indeed to an improvement of the result And finally, for the sonar data set we tried also to apply a similar approach as in the aforementioned dataset i.e. droping one of a feature pair with relatively high correlation in comparison to othe feature pairs and also keeping such labels with high correlation with the label. However, in contrast to the ionosphere dataset this did not lead to any improvement of the model performance but rather keeping all features inside would result in the best classification result. As a final idea we applied a log transformation to the data set. Indeed this had a positive impact of the performance of the mdoel which let us conclude that the data was skewed to the extent that some relatively large feature elements skewed the data set no log transformation was performed for the lables though.
 
 # Practical 3: Artificial Neural Network & Transfer Learning
-
-Since the two tasks could not be well divided, we solved them using the pair programming method. All members participated in solving the tasks.
 
 ## Task 1: Artificial Neural Network
 
